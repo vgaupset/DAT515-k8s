@@ -1,0 +1,41 @@
+name: deploy-k8s
+on:
+  push:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: pwsh
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: Production
+    env:
+      PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: Install-Module Az -Force
+      - uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+      - run: .github/scripts/deploy.ps1
+
+  teardown:
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+      - run: Install-Module Az -Force
+      - uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+      - run: .github/scripts/teardown.ps1

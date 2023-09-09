@@ -8,4 +8,5 @@ param (
 New-AzResourceGroupDeploymentStack  -TemplateFile $templateFile `
                                     -TemplateParameterFile $templateParameterFile `
                                     -Name $deploymentStackName `
-                                    -ResourceGroupName $resourceGroupName
+                                    -ResourceGroupName $resourceGroupName `
+                                    -DenySettingsMode None

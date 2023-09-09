@@ -11,6 +11,8 @@ permissions:
   id-token: write
   contents: read
 
+concurrency: deploy-k8s
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -29,6 +31,7 @@ jobs:
       - run: .github/scripts/deploy.ps1
 
   teardown:
+    needs: deploy
     runs-on: ubuntu-latest
     environment: Production
     steps:

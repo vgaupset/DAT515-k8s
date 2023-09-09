@@ -5,4 +5,5 @@ param (
 
 Remove-AzResourceGroupDeploymentStack   -Name $deploymentStackName `
                                         -ResourceGroupName $resourceGroupName `
-                                        -DeleteResources
+                                        -DeleteResources `
+                                        -Force

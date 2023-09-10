@@ -235,6 +235,25 @@ resource vmExtension 'Microsoft.Compute/virtualMachines/extensions@2022-03-01' =
   }
 }
 
+resource customScriptExtension 'Microsoft.Compute/virtualMachines/extensions@2022-03-01' = if ((securityType == 'TrustedLaunch') && ((securityProfileJson.uefiSettings.secureBootEnabled == true) && (securityProfileJson.uefiSettings.vTpmEnabled == true))) {
+  parent: vm
+  name: 'custom-script'
+  location: location
+  properties: {
+    publisher: 'Microsoft.Azure.Extensions'
+    type: 'CustomScript'
+    typeHandlerVersion: '2.1'
+    autoUpgradeMinorVersion: true
+    enableAutomaticUpgrade: true
+    protectedSettings: {
+      commandToExecute: 'sh prereq.sh'
+      fileUris: [
+        'https://raw.githubusercontent.com/vgaupset/dat515-k8s/main/src/infra/prereq.sh'
+      ]
+    }
+  }
+}
+
 output adminUsername string = adminUsername
 output hostname string = publicIPAddress.properties.dnsSettings.fqdn
 output sshCommand string = 'ssh ${adminUsername}@${publicIPAddress.properties.dnsSettings.fqdn}'

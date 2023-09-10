@@ -244,7 +244,6 @@ resource customScriptExtension 'Microsoft.Compute/virtualMachines/extensions@202
     type: 'CustomScript'
     typeHandlerVersion: '2.1'
     autoUpgradeMinorVersion: true
-    enableAutomaticUpgrade: true
     protectedSettings: {
       commandToExecute: 'sh prereq.sh'
       fileUris: [

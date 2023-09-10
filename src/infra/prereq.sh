@@ -72,3 +72,20 @@ systemctl status containerd
 sudo systemctl enable kubelet
 
 sudo kubeadm config images pull --cri-socket /run/containerd/containerd.sock
+
+sudo kubeadm init   --pod-network-cidr=10.244.0.0/16   --cri-socket /run/containerd/containerd.sock
+
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+wget https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f kube-flannel.yml
+
+
+# Apply webapp
+
+kubectl apply -f https://raw.githubusercontent.com/vgaupset/dat515-k8s/main/src/k8s/webapp-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/vgaupset/dat515-k8s/main/src/k8s/webapp-service.yaml
+

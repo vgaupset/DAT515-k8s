@@ -1,6 +1,5 @@
 name: deploy-k8s
 on:
-  push:
   workflow_dispatch:
 
 defaults:

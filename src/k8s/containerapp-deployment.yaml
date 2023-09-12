@@ -19,5 +19,3 @@ spec:
         image: mcr.microsoft.com/k8se/quickstart:latest
         ports:
         - containerPort: 80
-      - name: mysql
-        image: mysql:5.7

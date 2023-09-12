@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: containerapp-deployment
+  labels:
+    app: containerapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: containerapp
+  template:
+    metadata:
+      labels:
+        app: containerapp
+    spec:
+      containers:
+      - name: containerapp
+        image: mcr.microsoft.com/k8se/quickstart:latest
+        ports:
+        - containerPort: 80
+      - name: my-sql
+        image: my-sql:5.7

@@ -18,6 +18,7 @@ jobs:
     environment: Production
     env:
       PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+      ADMIN_PASS: ${{ secrets.ADMIN_PASS }}
     steps:
       - uses: actions/checkout@v4
       - run: Install-Module Az -Force

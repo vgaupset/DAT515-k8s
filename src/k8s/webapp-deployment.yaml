@@ -19,3 +19,10 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
+        livenessProbe:
+          exec:
+            command:
+            - curl
+            - http://10.1.0.4:30080
+          initialDelaySeconds: 5
+          periodSeconds: 5
